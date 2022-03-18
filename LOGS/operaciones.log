@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-03-18T10:14:40.330812900Z</date>
+  <millis>1647598480330</millis>
+  <nanos>812900</nanos>
+  <sequence>0</sequence>
+  <logger>principal.Calculadora</logger>
+  <level>CONFIG</level>
+  <class>principal.Calculadora</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Configuracion hecha.</message>
+</record>
+<record>
+  <date>2022-03-18T10:14:40.380679300Z</date>
+  <millis>1647598480380</millis>
+  <nanos>679300</nanos>
+  <sequence>1</sequence>
+  <logger>principal.Calculadora</logger>
+  <level>FINE</level>
+  <class>principal.Calculadora</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Nivel de log cambiado a FINE</message>
+</record>
+<record>
+  <date>2022-03-18T10:14:40.381055500Z</date>
+  <millis>1647598480381</millis>
+  <nanos>55500</nanos>
+  <sequence>2</sequence>
+  <logger>principal.Calculadora</logger>
+  <level>FINER</level>
+  <class>principal.Calculadora</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Ejemplo con log FINE en LOGGER completado.</message>
+</record>
+<record>
+  <date>2022-03-18T10:14:47.853977Z</date>
+  <millis>1647598487853</millis>
+  <nanos>977000</nanos>
+  <sequence>3</sequence>
+  <logger>principal.Calculadora</logger>
+  <level>FINE</level>
+  <class>principal.Calculadora</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message> operando 1 2 operando 2 </message>
+  <param>3</param>
+</record>
+<record>
+  <date>2022-03-18T10:14:52.427636600Z</date>
+  <millis>1647598492427</millis>
+  <nanos>636600</nanos>
+  <sequence>4</sequence>
+  <logger>principal.Calculadora</logger>
+  <level>WARNING</level>
+  <class>principal.Calculadora</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>no puedes dividir entre cero </message>
+  <exception>
+    <message>java.lang.ArithmeticException: / by zero</message>
+    <frame>
+      <class>operaciones.Operaciones</class>
+      <method>dividir</method>
+      <line>80</line>
+    </frame>
+    <frame>
+      <class>principal.Calculadora</class>
+      <method>main</method>
+      <line>92</line>
+    </frame>
+  </exception>
+</record>
+</log>
