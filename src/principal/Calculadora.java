@@ -1,15 +1,15 @@
 package principal;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-
 import logs.FormatoHTML;
-import logs.LogConsolaMasFichero;
+import logs.filtrosoloMultiplicar;
 import menu.Menu;
 import operaciones.Operaciones;
 
@@ -23,11 +23,27 @@ import operaciones.Operaciones;
  */
 public class Calculadora {
 
-	private static final Logger LOGGER = Logger.getLogger(Calculadora.class.getName());
+	private static final LogManager logManager = LogManager.getLogManager();
+	private static final Logger LOGGER = Logger.getLogger("confLogger");
+	
+	static {
+		
+		try {
+			
+			logManager.readConfiguration(new FileInputStream("./LOGS/configLog.properties"));
+		} 
+		
+		catch (IOException exception) {
+			
+			LOGGER.log(Level.SEVERE, "Error al cargar la configuración", exception);
+		}
+	}
 
 	public static void main(String[] args) {
-		
-		configurarlog();
+
+		LOGGER.fine("Mensaje FINE guardado.");
+
+		// configurarlog();
 
 		int resultado = 0;
 		int[] operandos = new int[2];
@@ -41,7 +57,7 @@ public class Calculadora {
 
 			operandos = menu.pedirNumeros();
 			operacion = menu.menuOpciones();
-
+			
 			try {
 
 				if (operacion.equalsIgnoreCase("+")) {
@@ -60,6 +76,7 @@ public class Calculadora {
 
 					resultado = operaciones.multiplicar(operandos[0], operandos[1]);
 					System.out.println("Resultado: " + resultado);
+
 				}
 
 				else if (operacion.equalsIgnoreCase("/")) {
@@ -76,11 +93,13 @@ public class Calculadora {
 
 				else {
 
-					System.out.println("Operación no válida");
+					System.out.println("Operaciï¿½n no vï¿½lida");
 				}
 
 				// Logger Level Fine //
-				LOGGER.log(Level.FINE, " operando1: " + operandos[0] + " operando2: " + operandos[1]+ " resultado: " +resultado);
+				LOGGER.log(Level.FINE, "tipo de operacion " + operacion + " operando1: " + operandos[0] + " operando2: "
+						+ operandos[1] + " resultado: " + resultado);
+				
 
 			}
 
@@ -94,49 +113,50 @@ public class Calculadora {
 
 		} while (menu.repetir());
 	}
-	
-	public static void configurarlog() {
-		
+
+/*	public static void configurarlog() {
+
 		LOGGER.setUseParentHandlers(false);
-		
-				// Logger Creacion //
-				Handler consoleHandler = null;
-				Handler fileHandler = null;
 
-				try {
+		// Logger Creacion //
+		Handler consoleHandler = null;
+		Handler fileHandler = null;
 
-					consoleHandler = new ConsoleHandler();
-					fileHandler = new FileHandler("./LOGS/operaciones.html");
+		try {
 
-					System.out.println(LOGGER.getHandlers().length);
+			consoleHandler = new ConsoleHandler();
+			fileHandler = new FileHandler("./LOGS/operaciones.html");
 
-					// Formato Consola //
-					fileHandler.setFormatter(new FormatoHTML());
+			System.out.println(LOGGER.getHandlers().length);
 
-					LOGGER.addHandler(consoleHandler);
-					LOGGER.addHandler(fileHandler);
+			// Formato Consola //
+			fileHandler.setFormatter(new FormatoHTML());
+			fileHandler.setFilter(new filtrosoloMultiplicar());
 
-					consoleHandler.setLevel(Level.ALL);
-					fileHandler.setLevel(Level.ALL);
-					LOGGER.setLevel(Level.ALL);
+			LOGGER.addHandler(consoleHandler);
+			LOGGER.addHandler(fileHandler);
 
-					LOGGER.config("Configuracion hecha.");
+			consoleHandler.setLevel(Level.ALL);
+			fileHandler.setLevel(Level.ALL);
+			LOGGER.setLevel(Level.ALL);
 
-					// Eliminamos handler de la consola
-					LOGGER.removeHandler(consoleHandler);
-					LOGGER.log(Level.FINE, "Nivel de log cambiado a FINE");
+			LOGGER.config("Configuracion hecha.");
 
-				}
+			// Eliminamos handler de la consola
+			LOGGER.removeHandler(consoleHandler);
+			LOGGER.log(Level.FINE, "Nivel de log cambiado a FINE");
 
-				catch (IOException exception) {
+		}
 
-					LOGGER.log(Level.SEVERE, "Ocurrio un error en FileHandler.", exception);
+		catch (IOException exception) {
 
-				}
+			LOGGER.log(Level.SEVERE, "Ocurrio un error en FileHandler.", exception);
 
-				LOGGER.finer("Ejemplo con log FINE en LOGGER completado.");
-		
-	}
+		}
+
+		LOGGER.finer("Ejemplo con log FINE en LOGGER completado.");
+
+	}*/
 }
 
 //elimina el handler por defecto que crea la consola
