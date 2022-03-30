@@ -10,6 +10,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import logs.FormatoHTML;
 import logs.filtrosoloMultiplicar;
+import logs.filtrosolonulo;
 import menu.Menu;
 import operaciones.Operaciones;
 
@@ -26,11 +27,13 @@ public class Calculadora {
 	private static final LogManager logManager = LogManager.getLogManager();
 	private static final Logger LOGGER = Logger.getLogger("confLogger");
 	
+	
 	static {
 		
 		try {
 			
-			logManager.readConfiguration(new FileInputStream("./LOGS/configLog.properties"));
+			logManager.readConfiguration(new FileInputStream("./LOGS/configLognulo.properties"));
+			
 		} 
 		
 		catch (IOException exception) {
@@ -40,8 +43,6 @@ public class Calculadora {
 	}
 
 	public static void main(String[] args) {
-
-		LOGGER.fine("Mensaje FINE guardado.");
 
 		// configurarlog();
 
@@ -97,10 +98,8 @@ public class Calculadora {
 				}
 
 				// Logger Level Fine //
-				LOGGER.log(Level.FINE, "tipo de operacion " + operacion + " operando1: " + operandos[0] + " operando2: "
-						+ operandos[1] + " resultado: " + resultado);
+				LOGGER.log(Level.FINE, operacion + " " + operandos[0] + " " + operandos[1] + " " + resultado);
 				
-
 			}
 
 			catch (ArithmeticException e) {
@@ -108,7 +107,6 @@ public class Calculadora {
 				// Logger Level Warning //
 				LOGGER.log(Level.WARNING, "no puedes dividir entre cero ", e);
 				System.out.println("no puedes divir entre cero " + e.getMessage());
-
 			}
 
 		} while (menu.repetir());
