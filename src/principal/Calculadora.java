@@ -8,9 +8,8 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import logs.FormatoHTML;
-import logs.filtrosoloMultiplicar;
-import logs.filtrosolonulo;
+import LogsFiltros.filtrosoloMultiplicar;
+import Logs_Formatos.FormatoHTML;
 import menu.Menu;
 import operaciones.Operaciones;
 
@@ -24,6 +23,7 @@ import operaciones.Operaciones;
  */
 public class Calculadora {
 
+	// Primer Handler //
 	private static final LogManager logManager = LogManager.getLogManager();
 	private static final Logger LOGGER = Logger.getLogger("confLogger");
 
@@ -31,28 +31,31 @@ public class Calculadora {
 
 		try {
 
-			logManager.readConfiguration(new FileInputStream("./LOGS/configLognulo.properties"));
+			logManager.readConfiguration(new FileInputStream("./Properties/configLognulo.properties"));
 
 		}
 
 		catch (IOException exception) {
 
-			LOGGER.log(Level.SEVERE, "Error al cargar la configuración", exception);
+			LOGGER.log(Level.SEVERE, "Error al cargar la configuracion", exception);
 		}
 	}
 
 	public static void main(String[] args) {
 
+		// Segundo Handler //
 		configurarlog();
 
+		// Variables //
 		int resultado = 0;
 		int[] operandos = new int[2];
-
 		String operacion = "";
 
+		// Objetos //
 		Menu menu = new Menu();
 		Operaciones operaciones = new Operaciones();
 
+		// Bucle de Calculadora //
 		do {
 
 			operandos = menu.pedirNumeros();
@@ -60,18 +63,21 @@ public class Calculadora {
 
 			try {
 
+				// Suma //
 				if (operacion.equalsIgnoreCase("+")) {
 
 					resultado = operaciones.sumar(operandos[0], operandos[1]);
 					System.out.println("Resultado: " + resultado);
 				}
 
+				// Resta //
 				else if (operacion.equalsIgnoreCase("-")) {
 
 					resultado = operaciones.restar(operandos[0], operandos[1]);
 					System.out.println("Resultado: " + resultado);
 				}
 
+				// Multiplicar //
 				else if (operacion.equalsIgnoreCase("*")) {
 
 					resultado = operaciones.multiplicar(operandos[0], operandos[1]);
@@ -79,12 +85,14 @@ public class Calculadora {
 
 				}
 
+				// Division //
 				else if (operacion.equalsIgnoreCase("/")) {
 
 					resultado = operaciones.dividir(operandos[0], operandos[1]);
 					System.out.println("Resultado: " + resultado);
 				}
 
+				// porcentaje //
 				else if (operacion.equalsIgnoreCase("%")) {
 
 					resultado = operaciones.resto(operandos[0], operandos[1]);
@@ -93,7 +101,7 @@ public class Calculadora {
 
 				else {
 
-					System.out.println("Operaciï¿½n no vï¿½lida");
+					System.out.println("Operacion no valida");
 				}
 
 				// Logger Level Fine //
@@ -105,12 +113,14 @@ public class Calculadora {
 
 				// Logger Level Warning //
 				LOGGER.log(Level.WARNING, "no puedes dividir entre cero ", e);
+
 				System.out.println("no puedes divir entre cero " + e.getMessage());
 			}
 
 		} while (menu.repetir());
 	}
 
+	// Metodo de configuracion del segundo Handler //
 	public static void configurarlog() {
 
 		// Logger Creacion //
@@ -120,9 +130,7 @@ public class Calculadora {
 		try {
 
 			consoleHandler = new ConsoleHandler();
-			fileHandler = new FileHandler("./LOGS/operaciones.html");
-
-			System.out.println(LOGGER.getHandlers().length);
+			fileHandler = new FileHandler("./LOGS/operacionesMultiplicar.html");
 
 			// Formato Consola //
 			fileHandler.setFormatter(new FormatoHTML());
@@ -135,12 +143,6 @@ public class Calculadora {
 			fileHandler.setLevel(Level.ALL);
 			LOGGER.setLevel(Level.ALL);
 
-			LOGGER.config("Configuracion hecha.");
-
-			// Eliminamos handler de la consola
-			LOGGER.removeHandler(consoleHandler);
-			LOGGER.log(Level.FINE, "Nivel de log cambiado a FINE");
-
 		}
 
 		catch (IOException exception) {
@@ -148,8 +150,6 @@ public class Calculadora {
 			LOGGER.log(Level.SEVERE, "Ocurrio un error en FileHandler.", exception);
 
 		}
-
-		LOGGER.finer("Ejemplo con log FINE en LOGGER completado.");
 
 	}
 }
