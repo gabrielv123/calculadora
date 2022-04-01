@@ -26,25 +26,24 @@ public class Calculadora {
 
 	private static final LogManager logManager = LogManager.getLogManager();
 	private static final Logger LOGGER = Logger.getLogger("confLogger");
-	
-	
+
 	static {
-		
+
 		try {
-			
+
 			logManager.readConfiguration(new FileInputStream("./LOGS/configLognulo.properties"));
-			
-		} 
-		
+
+		}
+
 		catch (IOException exception) {
-			
+
 			LOGGER.log(Level.SEVERE, "Error al cargar la configuración", exception);
 		}
 	}
 
 	public static void main(String[] args) {
 
-		// configurarlog();
+		configurarlog();
 
 		int resultado = 0;
 		int[] operandos = new int[2];
@@ -58,7 +57,7 @@ public class Calculadora {
 
 			operandos = menu.pedirNumeros();
 			operacion = menu.menuOpciones();
-			
+
 			try {
 
 				if (operacion.equalsIgnoreCase("+")) {
@@ -99,7 +98,7 @@ public class Calculadora {
 
 				// Logger Level Fine //
 				LOGGER.log(Level.FINE, operacion + " " + operandos[0] + " " + operandos[1] + " " + resultado);
-				
+
 			}
 
 			catch (ArithmeticException e) {
@@ -112,9 +111,7 @@ public class Calculadora {
 		} while (menu.repetir());
 	}
 
-/*	public static void configurarlog() {
-
-		LOGGER.setUseParentHandlers(false);
+	public static void configurarlog() {
 
 		// Logger Creacion //
 		Handler consoleHandler = null;
@@ -154,7 +151,7 @@ public class Calculadora {
 
 		LOGGER.finer("Ejemplo con log FINE en LOGGER completado.");
 
-	}*/
+	}
 }
 
 //elimina el handler por defecto que crea la consola
