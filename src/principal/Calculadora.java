@@ -37,7 +37,7 @@ public class Calculadora {
 
 		catch (IOException exception) {
 
-			LOGGER.log(Level.SEVERE, "Error al cargar la configuracion", exception);
+			LOGGER.log(Level.SEVERE, "Error al cargar la configuracion.", exception);
 		}
 	}
 
